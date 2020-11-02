@@ -111,4 +111,35 @@ public class Siniestro {
 		this.pagado = pagado;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((fechaSiniestro == null) ? 0 : fechaSiniestro.hashCode());
+		result = prime * result + ((poliza == null) ? 0 : poliza.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Siniestro other = (Siniestro) obj;
+		if (fechaSiniestro == null) {
+			if (other.fechaSiniestro != null)
+				return false;
+		} else if (!fechaSiniestro.equals(other.fechaSiniestro))
+			return false;
+		if (poliza == null) {
+			if (other.poliza != null)
+				return false;
+		} else if (!poliza.equals(other.poliza))
+			return false;
+		return true;
+	}
+
 }

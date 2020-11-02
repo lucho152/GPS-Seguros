@@ -41,6 +41,6 @@ public class Cliente extends Persona {
 
 	public void setPolizas(Set<Poliza> polizas) {
 		this.polizas = polizas;
-	}	
+	}
 
 }

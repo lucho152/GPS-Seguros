@@ -29,4 +29,29 @@ public class Beneficiario extends Persona {
 		this.relacionConAsegurado = relacionConAsegurado;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((relacionConAsegurado == null) ? 0 : relacionConAsegurado.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Beneficiario other = (Beneficiario) obj;
+		if (relacionConAsegurado == null) {
+			if (other.relacionConAsegurado != null)
+				return false;
+		} else if (!relacionConAsegurado.equals(other.relacionConAsegurado))
+			return false;
+		return true;
+	}
+
 }

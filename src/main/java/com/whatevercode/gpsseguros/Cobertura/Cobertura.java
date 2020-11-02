@@ -59,6 +59,37 @@ public class Cobertura {
 
 	public void setCompania(Compania compania) {
 		this.compania = compania;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((compania == null) ? 0 : compania.hashCode());
+		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cobertura other = (Cobertura) obj;
+		if (compania == null) {
+			if (other.compania != null)
+				return false;
+		} else if (!compania.equals(other.compania))
+			return false;
+		if (nombre == null) {
+			if (other.nombre != null)
+				return false;
+		} else if (!nombre.equals(other.nombre))
+			return false;
+		return true;
 	}	
 
 }

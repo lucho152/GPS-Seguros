@@ -138,4 +138,29 @@ public class SiniestroVial extends SiniestroRoptura{
 		this.presupuestoTercero = presupuestoTercero;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((tercero == null) ? 0 : tercero.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SiniestroVial other = (SiniestroVial) obj;
+		if (tercero == null) {
+			if (other.tercero != null)
+				return false;
+		} else if (!tercero.equals(other.tercero))
+			return false;
+		return true;
+	}
+
 }

@@ -1,4 +1,4 @@
-package com.whatevercode.gpsseguros.Cliente;
+package com.whatevercode.gpsseguros.Modelo;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,32 +10,33 @@ import org.springframework.stereotype.Service;
 import com.whatevercode.gpsseguros.IService;
 
 @Service
-public class CrudCliente implements IService<Cliente>{
+public class ModeloService implements IService<Modelo> {
 	
 	private Logger log = Logger.getLogger(this.getClass().getName());
-	
+
 	@Autowired
-	private ClienteRepo repository;
+	private ModeloRepo repository;
 
 	@Override
-	public Cliente save(Cliente cliente) {
+	public Modelo save(Modelo modelo) {
 		try {
-			Cliente save = repository.save(cliente);
-			log.info("Nuevo Cliente " + cliente.getId());
-			return save;
+			Modelo saved = repository.save(modelo);
+			log.info("Nuevo Modelo " + modelo.getId());
+			return saved;
 		} catch (Exception e) {
 			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
-			return null;
 		}
+		
+		return null;
 	}
 
 	@Override
-	public List<Cliente> find() {
+	public List<Modelo> find() {
 		return repository.findAll();
 	}
 
 	@Override
-	public Optional<Cliente> find(String id) {
+	public Optional<Modelo> find(String id) {
 		return repository.findById(id);
 	}
 

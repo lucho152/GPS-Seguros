@@ -122,4 +122,29 @@ public class Vehiculo {
 		this.cliente = cliente;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((dominio == null) ? 0 : dominio.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Vehiculo other = (Vehiculo) obj;
+		if (dominio == null) {
+			if (other.dominio != null)
+				return false;
+		} else if (!dominio.equals(other.dominio))
+			return false;
+		return true;
+	}
+
 }

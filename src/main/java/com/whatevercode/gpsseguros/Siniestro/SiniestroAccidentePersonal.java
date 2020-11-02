@@ -12,9 +12,9 @@ import com.whatevercode.gpsseguros.Poliza.Poliza;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @PrimaryKeyJoinColumn(referencedColumnName="id")
-public class SiniestroAccPersonal extends Siniestro{
+public class SiniestroAccidentePersonal extends Siniestro{
 
-	public SiniestroAccPersonal(String id, LocalDate fechaSiniestro, LocalDate fechaPresentacion, Poliza poliza,
+	public SiniestroAccidentePersonal(String id, LocalDate fechaSiniestro, LocalDate fechaPresentacion, Poliza poliza,
 			String dictamen, boolean formularioDenuncia, boolean dni, boolean pagado) {
 		super(id, fechaSiniestro, fechaPresentacion, poliza, dictamen, formularioDenuncia, dni, pagado);
 		// TODO Auto-generated constructor stub

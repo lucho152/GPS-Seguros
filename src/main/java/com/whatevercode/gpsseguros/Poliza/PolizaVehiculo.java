@@ -59,4 +59,29 @@ public class PolizaVehiculo extends Poliza {
 		this.costoVida = costoVida;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((vehiculo == null) ? 0 : vehiculo.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PolizaVehiculo other = (PolizaVehiculo) obj;
+		if (vehiculo == null) {
+			if (other.vehiculo != null)
+				return false;
+		} else if (!vehiculo.equals(other.vehiculo))
+			return false;
+		return true;
+	}
+
 }

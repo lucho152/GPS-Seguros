@@ -140,4 +140,29 @@ public class Poliza {
 		this.siniestros = siniestros;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((numeroPoliza == null) ? 0 : numeroPoliza.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Poliza other = (Poliza) obj;
+		if (numeroPoliza == null) {
+			if (other.numeroPoliza != null)
+				return false;
+		} else if (!numeroPoliza.equals(other.numeroPoliza))
+			return false;
+		return true;
+	}
+
 }
