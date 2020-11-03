@@ -2,7 +2,6 @@ package com.whatevercode.gpsseguros.Cliente;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,29 +18,21 @@ import com.whatevercode.gpsseguros.IController;
 @RequestMapping(path="/cliente")
 public class ClienteController implements IController<Cliente> {
 	
-	private Logger log = Logger.getLogger(this.getClass().getName());
-	
 	@Autowired
-	private ClienteRepo repository;
+	private ClienteService service;
 	
 	@Override
 	@PostMapping(path = "/save")
 	public @ResponseBody String save(@RequestParam Cliente cliente) {
-		try {
-			repository.save(cliente);
-			log.info("Nuevo Cliente " + cliente.getId());
-			return "Cliente Guardado.";
-		} catch (Exception e) {
-			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
-		}
-		
+		Cliente saved = service.save(cliente);
+		if(saved != null) return "Cliente Guardado.";
 		return "No se a podido agregar el cliente.";
 	}
 	
 	@Override
 	@GetMapping(path = "/find/{id}")
 	public @ResponseBody Cliente find(@RequestParam String id){
-		Optional<Cliente> cliente = repository.findById(id);
+		Optional<Cliente> cliente = service.find(id);
 		if(cliente.isPresent()) return cliente.get();
 		return null;
 	}
@@ -49,20 +40,14 @@ public class ClienteController implements IController<Cliente> {
 	@Override
 	@GetMapping(path = "/findAll")
 	public @ResponseBody List<Cliente> find(){
-		return repository.findAll();
+		return service.find();
 	}
 	
 	@Override
 	@DeleteMapping(path = "/delete/{id}")
 	public @ResponseBody String delete(@RequestParam String id){
-		try {
-			repository.deleteById(id);
-			log.info("Cliente Eliminado " + id);
-			return "Cliente Eliminado.";
-		} catch (Exception e) {
-			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
-		}
-		
+		Optional<Cliente> deleted = service.delete(id);
+		if(deleted.isEmpty()) return "Cliente Eliminado.";
 		return "No se a podido eliminar el cliente.";
 	}
 

@@ -41,12 +41,14 @@ public class VehiculoService implements IService<Vehiculo>{
 	}
 
 	@Override
-	public void delete(String id) {
+	public Optional<Vehiculo> delete(String id) {
 		try {
 			repository.deleteById(id);
 		} catch (Exception e) {
 			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
 		}
+		
+		return find(id);
 	}
 
 }

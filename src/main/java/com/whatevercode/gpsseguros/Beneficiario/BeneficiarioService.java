@@ -42,12 +42,14 @@ public class BeneficiarioService implements IService<Beneficiario> {
 	}
 
 	@Override
-	public void delete(String id) {
+	public Optional<Beneficiario> delete(String id) {
 		try {
 			repository.deleteById(id);
 		} catch (Exception e) {
 			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
 		}
+		
+		return find(id);
 	}
 
 }

@@ -41,12 +41,14 @@ public class SiniestroService implements IService<Siniestro>{
 	}
 
 	@Override
-	public void delete(String id) {
+	public Optional<Siniestro> delete(String id) {
 		try {
 			repository.deleteById(id);
 		} catch (Exception e) {
 			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
 		}
+		
+		return find(id);
 	}
 
 }

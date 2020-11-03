@@ -2,7 +2,6 @@ package com.whatevercode.gpsseguros.Pago;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,29 +18,21 @@ import com.whatevercode.gpsseguros.IController;
 @RequestMapping(path = "/pago")
 public class PagoController implements IController<Pago> {
 	
-private Logger log = Logger.getLogger(this.getClass().getName());
-	
 	@Autowired
-	private PagoRepo repository;
+	private PagoService service;
 	
 	@Override
 	@PostMapping(path = "/save")
 	public @ResponseBody String save(@RequestParam Pago pago) {
-		try {
-			repository.save(pago);
-			log.info("Nuevo Pago " + pago.getId());
-			return "Pago Guardado.";
-		} catch (Exception e) {
-			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
-		}
-		
+		Pago saved = service.save(pago);
+		if(saved != null) return "Pago Guardado.";
 		return "No se a podido agregar el pago.";
 	}
 	
 	@Override
 	@GetMapping(path = "/find/{id}")
 	public @ResponseBody Pago find(@RequestParam String id){
-		Optional<Pago> pago = repository.findById(id);
+		Optional<Pago> pago = service.find(id);
 		if(pago.isPresent()) return pago.get();
 		return null;
 	}
@@ -49,20 +40,14 @@ private Logger log = Logger.getLogger(this.getClass().getName());
 	@Override
 	@GetMapping(path = "/findAll")
 	public @ResponseBody List<Pago> find(){
-		return repository.findAll();
+		return service.find();
 	}
 	
 	@Override
 	@DeleteMapping(path = "/delete/{id}")
 	public @ResponseBody String delete(@RequestParam String id){
-		try {
-			repository.deleteById(id);
-			log.info("Pago Eliminado " + id);
-			return "Pago Eliminado.";
-		} catch (Exception e) {
-			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
-		}
-		
+		Optional<Pago> deleted = service.delete(id);
+		if(deleted.isEmpty()) return "Pago Eliminado.";
 		return "No se a podido eliminar el pago.";
 	}
 

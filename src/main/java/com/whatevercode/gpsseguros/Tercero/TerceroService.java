@@ -41,12 +41,14 @@ public class TerceroService implements IService<Tercero>{
 	}
 
 	@Override
-	public void delete(String id) {
+	public Optional<Tercero> delete(String id) {
 		try {
 			repository.deleteById(id);
 		} catch (Exception e) {
 			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
 		}
+		
+		return find(id);
 	}
 
 }

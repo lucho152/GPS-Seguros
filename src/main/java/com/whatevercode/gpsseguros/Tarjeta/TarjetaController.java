@@ -2,7 +2,6 @@ package com.whatevercode.gpsseguros.Tarjeta;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,29 +18,21 @@ import com.whatevercode.gpsseguros.IController;
 @RequestMapping(path = "/tarjeta")
 public class TarjetaController implements IController<Tarjeta>{
 	
-private Logger log = Logger.getLogger(this.getClass().getName());
-	
 	@Autowired
-	private TarjetaRepo repository;
+	private TarjetaService service;
 	
 	@Override
 	@PostMapping(path = "/save")
 	public @ResponseBody String save(@RequestParam Tarjeta tarjeta) {
-		try {
-			repository.save(tarjeta);
-			log.info("Nuevo Tarjeta " + tarjeta.getId());
-			return "Tarjeta Guardado.";
-		} catch (Exception e) {
-			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
-		}
-		
+		Tarjeta saved = service.save(tarjeta);
+		if(saved != null) return "Tarjeta Guardado.";
 		return "No se a podido agregar el tarjeta.";
 	}
 	
 	@Override
 	@GetMapping(path = "/find/{id}")
 	public @ResponseBody Tarjeta find(@RequestParam String id){
-		Optional<Tarjeta> tarjeta = repository.findById(id);
+		Optional<Tarjeta> tarjeta = service.find(id);
 		if(tarjeta.isPresent()) return tarjeta.get();
 		return null;
 	}
@@ -49,20 +40,14 @@ private Logger log = Logger.getLogger(this.getClass().getName());
 	@Override
 	@GetMapping(path = "/findAll")
 	public @ResponseBody List<Tarjeta> find(){
-		return repository.findAll();
+		return service.find();
 	}
 	
 	@Override
 	@DeleteMapping(path = "/delete/{id}")
 	public @ResponseBody String delete(@RequestParam String id){
-		try {
-			repository.deleteById(id);
-			log.info("Tarjeta Eliminado " + id);
-			return "Tarjeta Eliminado.";
-		} catch (Exception e) {
-			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
-		}
-		
+		Optional<Tarjeta> deleted = service.delete(id);
+		if(deleted.isEmpty()) return "Tarjeta Eliminado.";
 		return "No se a podido eliminar el tarjeta.";
 	}
 

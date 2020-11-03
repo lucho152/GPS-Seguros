@@ -41,12 +41,14 @@ public class ProductorService implements IService<Productor>{
 	}
 
 	@Override
-	public void delete(String id) {
+	public Optional<Productor> delete(String id) {
 		try {
 			repository.deleteById(id);
 		} catch (Exception e) {
 			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
 		}
+		
+		return find(id);
 	}
 
 }

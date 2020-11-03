@@ -2,7 +2,6 @@ package com.whatevercode.gpsseguros.Carroceria;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,29 +18,21 @@ import com.whatevercode.gpsseguros.IController;
 @RequestMapping(path = "/carroceria")
 public class CarroceriaController implements IController<Carroceria>{
 	
-private Logger log = Logger.getLogger(this.getClass().getName());
-	
 	@Autowired
-	private CarroceriaRepo repository;
+	private CarroceriaService service;
 	
 	@Override
 	@PostMapping(path = "/save")
 	public @ResponseBody String save(@RequestParam Carroceria carroceria) {
-		try {
-			repository.save(carroceria);
-			log.info("Nuevo Carroceria " + carroceria.getId());
-			return "Carroceria Guardado.";
-		} catch (Exception e) {
-			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
-		}
-		
+		Carroceria saved = service.save(carroceria);
+		if(saved != null) return "Carroceria Guardado.";
 		return "No se a podido agregar el carroceria.";
 	}
 	
 	@Override
 	@GetMapping(path = "/find/{id}")
 	public @ResponseBody Carroceria find(@RequestParam String id){
-		Optional<Carroceria> carroceria = repository.findById(id);
+		Optional<Carroceria> carroceria = service.find(id);
 		if(carroceria.isPresent()) return carroceria.get();
 		return null;
 	}
@@ -49,20 +40,14 @@ private Logger log = Logger.getLogger(this.getClass().getName());
 	@Override
 	@GetMapping(path = "/findAll")
 	public @ResponseBody List<Carroceria> find(){
-		return repository.findAll();
+		return service.find();
 	}
 	
 	@Override
 	@DeleteMapping(path = "/delete/{id}")
 	public @ResponseBody String delete(@RequestParam String id){
-		try {
-			repository.deleteById(id);
-			log.info("Carroceria Eliminado " + id);
-			return "Carroceria Eliminado.";
-		} catch (Exception e) {
-			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
-		}
-		
+		Optional<Carroceria> deleted = service.delete(id);
+		if(deleted.isEmpty()) return "Carroceria Eliminado.";
 		return "No se a podido eliminar el carroceria.";
 	}
 

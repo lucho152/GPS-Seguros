@@ -41,12 +41,14 @@ public class PersonaService implements IService<Persona> {
 	}
 
 	@Override
-	public void delete(String id) {
+	public Optional<Persona> delete(String id) {
 		try {
 			repository.deleteById(id);
 		} catch (Exception e) {
 			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
 		}
+		
+		return find(id);
 	}
 
 }

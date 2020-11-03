@@ -1,4 +1,4 @@
-package com.whatevercode.gpsseguros.Vehiculo;
+package com.whatevercode.gpsseguros.Beneficiario;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,40 +15,40 @@ import org.springframework.web.bind.annotation.RestController;
 import com.whatevercode.gpsseguros.IController;
 
 @RestController
-@RequestMapping(path = "/vehiculo")
-public class VehiculoController implements IController<Vehiculo>{
-
+@RequestMapping(path = "/beneficiario")
+public class BeneficiarioController implements IController<Beneficiario> {
+	
 	@Autowired
-	private VehiculoService service;
+	private BeneficiarioService service;
 	
 	@Override
 	@PostMapping(path = "/save")
-	public @ResponseBody String save(@RequestParam Vehiculo vehiculo) {
-		Vehiculo saved = service.save(vehiculo);
-		if(saved != null) return "Vehiculo Guardado.";
-		return "No se a podido agregar el vehiculo.";
+	public @ResponseBody String save(@RequestParam Beneficiario beneficiario) {
+		Beneficiario saved = service.save(beneficiario);
+		if(saved != null) return "Beneficiario Guardado.";
+		return "No se a podido agregar el beneficiario.";
 	}
 	
 	@Override
 	@GetMapping(path = "/find/{id}")
-	public @ResponseBody Vehiculo find(@RequestParam String id){
-		Optional<Vehiculo> vehiculo = service.find(id);
-		if(vehiculo.isPresent()) return vehiculo.get();
+	public @ResponseBody Beneficiario find(@RequestParam String id){
+		Optional<Beneficiario> beneficiario = service.find(id);
+		if(beneficiario.isPresent()) return beneficiario.get();
 		return null;
 	}
 	
 	@Override
 	@GetMapping(path = "/findAll")
-	public @ResponseBody List<Vehiculo> find(){
+	public @ResponseBody List<Beneficiario> find(){
 		return service.find();
 	}
 	
 	@Override
 	@DeleteMapping(path = "/delete/{id}")
 	public @ResponseBody String delete(@RequestParam String id){
-		Optional<Vehiculo> deleted = service.delete(id);
-		if(deleted.isEmpty()) return "Vehiculo Eliminado.";
-		return "No se a podido eliminar el vehiculo.";
+		Optional<Beneficiario> deleted = service.delete(id);
+		if(deleted.isEmpty()) return "Beneficiario Eliminado.";
+		return "No se a podido eliminar el beneficiario.";
 	}
 	
 }

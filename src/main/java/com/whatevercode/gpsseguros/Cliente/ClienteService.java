@@ -40,12 +40,14 @@ public class ClienteService implements IService<Cliente>{
 	}
 
 	@Override
-	public void delete(String id) {
+	public Optional<Cliente> delete(String id) {
 		try {
 			repository.deleteById(id);
 		} catch (Exception e) {
 			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
 		}
+		
+		return find(id);
 	}
 
 }

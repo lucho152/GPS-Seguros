@@ -41,12 +41,14 @@ public class PolizaAccidentePersonalService implements IService<PolizaAccidenteP
 	}
 
 	@Override
-	public void delete(String id) {
+	public Optional<PolizaAccidentePersonal> delete(String id) {
 		try {
 			repository.deleteById(id);
 		} catch (Exception e) {
 			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
 		}
+		
+		return find(id);
 	}
 
 }

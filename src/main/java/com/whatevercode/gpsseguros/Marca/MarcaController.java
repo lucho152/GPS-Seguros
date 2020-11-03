@@ -2,7 +2,6 @@ package com.whatevercode.gpsseguros.Marca;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,29 +18,21 @@ import com.whatevercode.gpsseguros.IController;
 @RequestMapping(path = "/marca")
 public class MarcaController implements IController<Marca>{
 	
-private Logger log = Logger.getLogger(this.getClass().getName());
-	
 	@Autowired
-	private MarcaRepo repository;
+	private MarcaService service;
 	
 	@Override
 	@PostMapping(path = "/save")
 	public @ResponseBody String save(@RequestParam Marca marca) {
-		try {
-			repository.save(marca);
-			log.info("Nuevo Marca " + marca.getId());
-			return "Marca Guardado.";
-		} catch (Exception e) {
-			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
-		}
-		
+		Marca saved = service.save(marca);
+		if(saved != null) return "Marca Guardado.";
 		return "No se a podido agregar el marca.";
 	}
 	
 	@Override
 	@GetMapping(path = "/find/{id}")
 	public @ResponseBody Marca find(@RequestParam String id){
-		Optional<Marca> marca = repository.findById(id);
+		Optional<Marca> marca = service.find(id);
 		if(marca.isPresent()) return marca.get();
 		return null;
 	}
@@ -49,20 +40,14 @@ private Logger log = Logger.getLogger(this.getClass().getName());
 	@Override
 	@GetMapping(path = "/findAll")
 	public @ResponseBody List<Marca> find(){
-		return repository.findAll();
+		return service.find();
 	}
 	
 	@Override
 	@DeleteMapping(path = "/delete/{id}")
 	public @ResponseBody String delete(@RequestParam String id){
-		try {
-			repository.deleteById(id);
-			log.info("Marca Eliminado " + id);
-			return "Marca Eliminado.";
-		} catch (Exception e) {
-			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
-		}
-		
+		Optional<Marca> deleted = service.delete(id);
+		if(deleted.isEmpty()) return "Marca Eliminado.";
 		return "No se a podido eliminar el marca.";
 	}
 

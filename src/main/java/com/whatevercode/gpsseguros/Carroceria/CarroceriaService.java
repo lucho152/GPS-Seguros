@@ -41,12 +41,14 @@ public class CarroceriaService implements IService<Carroceria>{
 	}
 
 	@Override
-	public void delete(String id) {
+	public Optional<Carroceria> delete(String id) {
 		try {
 			repository.deleteById(id);
 		} catch (Exception e) {
 			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
 		}
+		
+		return find(id);
 	}
 
 }

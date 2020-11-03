@@ -2,7 +2,6 @@ package com.whatevercode.gpsseguros.Banco;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,22 +18,14 @@ import com.whatevercode.gpsseguros.IController;
 @RequestMapping(path = "/banco")
 public class BancoController implements IController<Banco>{
 	
-private Logger log = Logger.getLogger(this.getClass().getName());
-	
 	@Autowired
 	private BancoService service;
 	
 	@Override
 	@PostMapping(path = "/save")
 	public @ResponseBody String save(@RequestParam Banco banco) {
-		try {
-			service.save(banco);
-			log.info("Nuevo Banco " + banco.getId());
-			return "Banco Guardado.";
-		} catch (Exception e) {
-			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
-		}
-		
+		Banco saved = service.save(banco);
+		if(saved != null) return "Banco Guardado.";
 		return "No se a podido agregar el banco.";
 	}
 	
@@ -55,14 +46,8 @@ private Logger log = Logger.getLogger(this.getClass().getName());
 	@Override
 	@DeleteMapping(path = "/delete/{id}")
 	public @ResponseBody String delete(@RequestParam String id){
-		try {
-			service.delete(id);
-			log.info("Banco Eliminado " + id);
-			return "Banco Eliminado.";
-		} catch (Exception e) {
-			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
-		}
-		
+		Optional<Banco> deleted = service.delete(id);
+		if(deleted.isEmpty()) return "Banco Eliminado.";
 		return "No se a podido eliminar el banco.";
 	}
 

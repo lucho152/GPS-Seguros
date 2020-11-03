@@ -10,5 +10,5 @@ public interface IService <T>{
 	T save(T t);
 	List<T> find();
 	Optional<T> find(String id);
-	void delete(String id);
+	Optional<T> delete(String id);
 }

@@ -20,9 +20,9 @@ public class BancoService implements IService<Banco>{
 	@Override
 	public Banco save(Banco banco) {
 		try {
-			Banco save = repository.save(banco);
+			Banco saved =  repository.save(banco);
 			log.info("Nuevo Banco " + banco.getId());
-			return save;
+			return saved;
 		} catch (Exception e) {
 			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
 			return null;
@@ -40,12 +40,14 @@ public class BancoService implements IService<Banco>{
 	}
 
 	@Override
-	public void delete(String id) {
+	public Optional<Banco> delete(String id) {
 		try {
 			repository.deleteById(id);
 		} catch (Exception e) {
 			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
 		}
+		
+		return find(id);
 	}
 
 }

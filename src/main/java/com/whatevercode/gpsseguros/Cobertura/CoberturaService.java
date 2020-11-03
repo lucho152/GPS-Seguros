@@ -41,12 +41,14 @@ public class CoberturaService implements IService<Cobertura> {
 	}
 
 	@Override
-	public void delete(String id) {
+	public Optional<Cobertura> delete(String id) {
 		try {
 			repository.deleteById(id);
 		} catch (Exception e) {
 			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
 		}
+		
+		return find(id);
 	}
 
 }

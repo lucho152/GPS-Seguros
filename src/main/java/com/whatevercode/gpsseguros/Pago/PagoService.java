@@ -41,12 +41,14 @@ public class PagoService implements IService<Pago> {
 	}
 
 	@Override
-	public void delete(String id) {
+	public Optional<Pago> delete(String id) {
 		try {
 			repository.deleteById(id);
 		} catch (Exception e) {
 			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
 		}
+		
+		return find(id);
 	}
 
 }

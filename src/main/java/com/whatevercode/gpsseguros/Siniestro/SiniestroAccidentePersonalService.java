@@ -41,12 +41,14 @@ public class SiniestroAccidentePersonalService implements IService<SiniestroAcci
 	}
 
 	@Override
-	public void delete(String id) {
+	public Optional<SiniestroAccidentePersonal> delete(String id) {
 		try {
 			repository.deleteById(id);
 		} catch (Exception e) {
 			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
 		}
+		
+		return find(id);
 	}
 
 }

@@ -41,12 +41,14 @@ public class CompaniaService implements IService<Compania>{
 	}
 
 	@Override
-	public void delete(String id) {
+	public Optional<Compania> delete(String id) {
 		try {
 			repository.deleteById(id);
 		} catch (Exception e) {
 			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
 		}
+		
+		return find(id);
 	}
 
 }

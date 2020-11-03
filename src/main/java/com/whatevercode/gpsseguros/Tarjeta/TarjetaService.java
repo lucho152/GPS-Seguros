@@ -41,12 +41,14 @@ public class TarjetaService implements IService<Tarjeta> {
 	}
 
 	@Override
-	public void delete(String id) {
+	public  Optional<Tarjeta> delete(String id) {
 		try {
 			repository.deleteById(id);
 		} catch (Exception e) {
 			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
 		}
+		
+		return find(id);
 	}
 
 }

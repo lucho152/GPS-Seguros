@@ -41,12 +41,14 @@ public class OcupacionService implements IService<Ocupacion>{
 	}
 
 	@Override
-	public void delete(String id) {
+	public Optional<Ocupacion> delete(String id) {
 		try {
 			repository.deleteById(id);
 		} catch (Exception e) {
 			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
 		}
+		
+		return find(id);
 	}
 
 }

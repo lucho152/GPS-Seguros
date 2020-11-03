@@ -2,7 +2,6 @@ package com.whatevercode.gpsseguros.Cobertura;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,29 +18,21 @@ import com.whatevercode.gpsseguros.IController;
 @RequestMapping(path = "/cobertura")
 public class CoberturaController implements IController<Cobertura> {
 	
-private Logger log = Logger.getLogger(this.getClass().getName());
-	
 	@Autowired
-	private CoberturaRepo repository;
+	private CoberturaService service;
 	
 	@Override
 	@PostMapping(path = "/save")
 	public @ResponseBody String save(@RequestParam Cobertura cobertura) {
-		try {
-			repository.save(cobertura);
-			log.info("Nuevo Cobertura " + cobertura.getId());
-			return "Cobertura Guardado.";
-		} catch (Exception e) {
-			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
-		}
-		
+		Cobertura saved = service.save(cobertura);
+		if(saved != null) return "Cobertura Guardado.";
 		return "No se a podido agregar el cobertura.";
 	}
 	
 	@Override
 	@GetMapping(path = "/find/{id}")
 	public @ResponseBody Cobertura find(@RequestParam String id){
-		Optional<Cobertura> cobertura = repository.findById(id);
+		Optional<Cobertura> cobertura = service.find(id);
 		if(cobertura.isPresent()) return cobertura.get();
 		return null;
 	}
@@ -49,20 +40,14 @@ private Logger log = Logger.getLogger(this.getClass().getName());
 	@Override
 	@GetMapping(path = "/findAll")
 	public @ResponseBody List<Cobertura> find(){
-		return repository.findAll();
+		return service.find();
 	}
 	
 	@Override
 	@DeleteMapping(path = "/delete/{id}")
 	public @ResponseBody String delete(@RequestParam String id){
-		try {
-			repository.deleteById(id);
-			log.info("Cobertura Eliminado " + id);
-			return "Cobertura Eliminado.";
-		} catch (Exception e) {
-			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
-		}
-		
+		Optional<Cobertura> deleted = service.delete(id);
+		if(deleted.isEmpty()) return "Cobertura Eliminado.";
 		return "No se a podido eliminar el cobertura.";
 	}
 

@@ -2,7 +2,6 @@ package com.whatevercode.gpsseguros.Ocupacion;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,29 +18,21 @@ import com.whatevercode.gpsseguros.IController;
 @RequestMapping(path = "/ocupacion")
 public class OcupacionController implements IController<Ocupacion> {
 	
-private Logger log = Logger.getLogger(this.getClass().getName());
-	
 	@Autowired
-	private OcupacionRepo repository;
+	private OcupacionService service;
 	
 	@Override
 	@PostMapping(path = "/save")
 	public @ResponseBody String save(@RequestParam Ocupacion ocupacion) {
-		try {
-			repository.save(ocupacion);
-			log.info("Nuevo Ocupacion " + ocupacion.getId());
-			return "Ocupacion Guardado.";
-		} catch (Exception e) {
-			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
-		}
-		
+		Ocupacion saved = service.save(ocupacion);
+		if(saved != null) return "Ocupacion Guardado.";
 		return "No se a podido agregar el ocupacion.";
 	}
 	
 	@Override
 	@GetMapping(path = "/find/{id}")
 	public @ResponseBody Ocupacion find(@RequestParam String id){
-		Optional<Ocupacion> ocupacion = repository.findById(id);
+		Optional<Ocupacion> ocupacion = service.find(id);
 		if(ocupacion.isPresent()) return ocupacion.get();
 		return null;
 	}
@@ -49,20 +40,14 @@ private Logger log = Logger.getLogger(this.getClass().getName());
 	@Override
 	@GetMapping(path = "/findAll")
 	public @ResponseBody List<Ocupacion> find(){
-		return repository.findAll();
+		return service.find();
 	}
 	
 	@Override
 	@DeleteMapping(path = "/delete/{id}")
 	public @ResponseBody String delete(@RequestParam String id){
-		try {
-			repository.deleteById(id);
-			log.info("Ocupacion Eliminado " + id);
-			return "Ocupacion Eliminado.";
-		} catch (Exception e) {
-			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
-		}
-		
+		Optional<Ocupacion> deleted = service.delete(id);
+		if(deleted.isEmpty()) return "Ocupacion Eliminado.";
 		return "No se a podido eliminar el ocupacion.";
 	}
 

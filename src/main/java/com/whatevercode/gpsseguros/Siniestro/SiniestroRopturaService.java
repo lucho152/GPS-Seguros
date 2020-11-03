@@ -41,12 +41,14 @@ public class SiniestroRopturaService implements IService<SiniestroRoptura>{
 	}
 
 	@Override
-	public void delete(String id) {
+	public Optional<SiniestroRoptura> delete(String id) {
 		try {
 			repository.deleteById(id);
 		} catch (Exception e) {
 			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
 		}
+		
+		return find(id);
 	}
 
 }

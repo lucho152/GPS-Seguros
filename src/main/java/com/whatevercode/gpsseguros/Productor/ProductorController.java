@@ -2,7 +2,6 @@ package com.whatevercode.gpsseguros.Productor;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,31 +16,23 @@ import com.whatevercode.gpsseguros.IController;
 
 @RestController
 @RequestMapping(path = "/productor")
-public class ProductorControler implements IController<Productor>{
+public class ProductorController implements IController<Productor>{
 
-private Logger log = Logger.getLogger(this.getClass().getName());
-	
 	@Autowired
-	private ProductorRepo repository;
+	private ProductorService service;
 	
 	@Override
 	@PostMapping(path = "/save")
 	public @ResponseBody String save(@RequestParam Productor productor) {
-		try {
-			repository.save(productor);
-			log.info("Nuevo Productor " + productor.getId());
-			return "Productor Guardado.";
-		} catch (Exception e) {
-			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
-		}
-		
-		return "No se a podido agregar el Productor.";
+		Productor saved = service.save(productor);
+		if(saved != null) return "Productor Guardado.";
+		return "No se a podido agregar el productor.";
 	}
 	
 	@Override
 	@GetMapping(path = "/find/{id}")
 	public @ResponseBody Productor find(@RequestParam String id){
-		Optional<Productor> productor = repository.findById(id);
+		Optional<Productor> productor = service.find(id);
 		if(productor.isPresent()) return productor.get();
 		return null;
 	}
@@ -49,21 +40,15 @@ private Logger log = Logger.getLogger(this.getClass().getName());
 	@Override
 	@GetMapping(path = "/findAll")
 	public @ResponseBody List<Productor> find(){
-		return repository.findAll();
+		return service.find();
 	}
 	
 	@Override
 	@DeleteMapping(path = "/delete/{id}")
 	public @ResponseBody String delete(@RequestParam String id){
-		try {
-			repository.deleteById(id);
-			log.info("Productor Eliminado " + id);
-			return "Productor Eliminado.";
-		} catch (Exception e) {
-			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
-		}
-		
-		return "No se a podido eliminar el Productor.";
+		Optional<Productor> deleted = service.delete(id);
+		if(deleted.isEmpty()) return "Productor Eliminado.";
+		return "No se a podido eliminar el productor.";
 	}
 	
 }

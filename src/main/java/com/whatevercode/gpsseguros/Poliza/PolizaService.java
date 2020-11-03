@@ -41,12 +41,14 @@ public class PolizaService implements IService<Poliza>{
 	}
 
 	@Override
-	public void delete(String id) {
+	public Optional<Poliza> delete(String id) {
 		try {
 			repository.deleteById(id);
 		} catch (Exception e) {
 			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
 		}
+		
+		return find(id);
 	}
 
 }

@@ -41,12 +41,14 @@ public class SiniestroVialService implements IService<SiniestroVial> {
 	}
 
 	@Override
-	public void delete(String id) {
+	public Optional<SiniestroVial> delete(String id) {
 		try {
 			repository.deleteById(id);
 		} catch (Exception e) {
 			log.warning(e.getLocalizedMessage() + " " + e.getMessage());
 		}
+		
+		return find(id);
 	}
 
 }
