@@ -25,30 +25,28 @@ public class MarcaController implements IController<Marca>{
 	@PostMapping(path = "/save")
 	public @ResponseBody String save(@RequestParam Marca marca) {
 		Marca saved = service.save(marca);
-		if(saved != null) return "Marca Guardado.";
-		return "No se a podido agregar el marca.";
+		if(saved != null) return "Marca guardado.";
+		return "No se a podido agregar la Marca.";
 	}
 	
 	@Override
-	@GetMapping(path = "/find/{id}")
+	@GetMapping(path = "/{id}")
 	public @ResponseBody Marca find(@RequestParam String id){
-		Optional<Marca> marca = service.find(id);
-		if(marca.isPresent()) return marca.get();
-		return null;
+		return service.find(id).get();
 	}
 	
 	@Override
-	@GetMapping(path = "/findAll")
+	@GetMapping
 	public @ResponseBody List<Marca> find(){
 		return service.find();
 	}
 	
 	@Override
-	@DeleteMapping(path = "/delete/{id}")
+	@DeleteMapping(path = "/{id}")
 	public @ResponseBody String delete(@RequestParam String id){
 		Optional<Marca> deleted = service.delete(id);
-		if(deleted.isEmpty()) return "Marca Eliminado.";
-		return "No se a podido eliminar el marca.";
+		if(deleted.isEmpty()) return "Marca eliminado.";
+		return "No se a podido eliminar la Marca.";
 	}
 
 }

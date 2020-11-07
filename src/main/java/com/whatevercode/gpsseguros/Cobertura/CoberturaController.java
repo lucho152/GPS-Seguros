@@ -25,30 +25,28 @@ public class CoberturaController implements IController<Cobertura> {
 	@PostMapping(path = "/save")
 	public @ResponseBody String save(@RequestParam Cobertura cobertura) {
 		Cobertura saved = service.save(cobertura);
-		if(saved != null) return "Cobertura Guardado.";
-		return "No se a podido agregar el cobertura.";
+		if(saved != null) return "Cobertura guardado.";
+		return "No se a podido agregar la Cobertura.";
 	}
 	
 	@Override
-	@GetMapping(path = "/find/{id}")
+	@GetMapping(path = "/{id}")
 	public @ResponseBody Cobertura find(@RequestParam String id){
-		Optional<Cobertura> cobertura = service.find(id);
-		if(cobertura.isPresent()) return cobertura.get();
-		return null;
+		return service.find(id).get();
 	}
 	
 	@Override
-	@GetMapping(path = "/findAll")
+	@GetMapping
 	public @ResponseBody List<Cobertura> find(){
 		return service.find();
 	}
 	
 	@Override
-	@DeleteMapping(path = "/delete/{id}")
+	@DeleteMapping(path = "/{id}")
 	public @ResponseBody String delete(@RequestParam String id){
 		Optional<Cobertura> deleted = service.delete(id);
-		if(deleted.isEmpty()) return "Cobertura Eliminado.";
-		return "No se a podido eliminar el cobertura.";
+		if(deleted.isEmpty()) return "Cobertura eliminado.";
+		return "No se a podido eliminar la Cobertura.";
 	}
 
 }

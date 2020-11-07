@@ -25,30 +25,28 @@ public class ModeloController implements IController<Modelo>{
 	@PostMapping(path = "/save")
 	public @ResponseBody String save(@RequestParam Modelo modelo) {
 		Modelo saved = service.save(modelo);
-		if(saved != null) return "Modelo Guardado.";
-		return "No se a podido agregar el modelo.";
+		if(saved != null) return "Modelo guardado.";
+		return "No se a podido agregar el Modelo.";
 	}
 	
 	@Override
-	@GetMapping(path = "/find/{id}")
+	@GetMapping(path = "/{id}")
 	public @ResponseBody Modelo find(@RequestParam String id){
-		Optional<Modelo> modelo = service.find(id);
-		if(modelo.isPresent()) return modelo.get();
-		return null;
+		return service.find(id).get();
 	}
 	
 	@Override
-	@GetMapping(path = "/findAll")
+	@GetMapping
 	public @ResponseBody List<Modelo> find(){
 		return service.find();
 	}
 	
 	@Override
-	@DeleteMapping(path = "/delete/{id}")
+	@DeleteMapping(path = "/{id}")
 	public @ResponseBody String delete(@RequestParam String id){
 		Optional<Modelo> deleted = service.delete(id);
-		if(deleted.isEmpty()) return "Modelo Eliminado.";
-		return "No se a podido eliminar el modelo.";
+		if(deleted.isEmpty()) return "Modelo eliminado.";
+		return "No se a podido eliminar el Modelo.";
 	}
 
 }

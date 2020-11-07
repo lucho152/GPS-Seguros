@@ -10,9 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import com.whatevercode.gpsseguros.Carroceria.Carroceria;
-import com.whatevercode.gpsseguros.Cliente.Cliente;
 import com.whatevercode.gpsseguros.Marca.Marca;
 import com.whatevercode.gpsseguros.Modelo.Modelo;
+import com.whatevercode.gpsseguros.Persona.Cliente.Cliente;
 
 @Entity
 public class Vehiculo {

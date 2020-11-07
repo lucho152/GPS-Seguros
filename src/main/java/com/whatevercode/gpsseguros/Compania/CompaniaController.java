@@ -25,30 +25,28 @@ public class CompaniaController implements IController<Compania> {
 	@PostMapping(path = "/save")
 	public @ResponseBody String save(@RequestParam Compania compania) {
 		Compania saved = service.save(compania);
-		if(saved != null) return "Compania Guardado.";
-		return "No se a podido agregar el compania.";
+		if(saved != null) return "Compania guardado.";
+		return "No se a podido agregar la Compania.";
 	}
 	
 	@Override
-	@GetMapping(path = "/find/{id}")
+	@GetMapping(path = "/{id}")
 	public @ResponseBody Compania find(@RequestParam String id){
-		Optional<Compania> compania = service.find(id);
-		if(compania.isPresent()) return compania.get();
-		return null;
+		return service.find(id).get();
 	}
 	
 	@Override
-	@GetMapping(path = "/findAll")
+	@GetMapping
 	public @ResponseBody List<Compania> find(){
 		return service.find();
 	}
 	
 	@Override
-	@DeleteMapping(path = "/delete/{id}")
+	@DeleteMapping(path = "/{id}")
 	public @ResponseBody String delete(@RequestParam String id){
 		Optional<Compania> deleted = service.delete(id);
-		if(deleted.isEmpty()) return "Compania Eliminado.";
-		return "No se a podido eliminar el compania.";
+		if(deleted.isEmpty()) return "Compania eliminado.";
+		return "No se a podido eliminar la Compania.";
 	}
 
 }

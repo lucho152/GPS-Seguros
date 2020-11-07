@@ -25,30 +25,28 @@ public class PagoController implements IController<Pago> {
 	@PostMapping(path = "/save")
 	public @ResponseBody String save(@RequestParam Pago pago) {
 		Pago saved = service.save(pago);
-		if(saved != null) return "Pago Guardado.";
-		return "No se a podido agregar el pago.";
+		if(saved != null) return "Pago guardado.";
+		return "No se a podido agregar el Pago.";
 	}
 	
 	@Override
-	@GetMapping(path = "/find/{id}")
+	@GetMapping(path = "/{id}")
 	public @ResponseBody Pago find(@RequestParam String id){
-		Optional<Pago> pago = service.find(id);
-		if(pago.isPresent()) return pago.get();
-		return null;
+		return service.find(id).get();
 	}
 	
 	@Override
-	@GetMapping(path = "/findAll")
+	@GetMapping
 	public @ResponseBody List<Pago> find(){
 		return service.find();
 	}
 	
 	@Override
-	@DeleteMapping(path = "/delete/{id}")
+	@DeleteMapping(path = "/{id}")
 	public @ResponseBody String delete(@RequestParam String id){
 		Optional<Pago> deleted = service.delete(id);
-		if(deleted.isEmpty()) return "Pago Eliminado.";
-		return "No se a podido eliminar el pago.";
+		if(deleted.isEmpty()) return "Pago eliminado.";
+		return "No se a podido eliminar el Pago.";
 	}
 
 }

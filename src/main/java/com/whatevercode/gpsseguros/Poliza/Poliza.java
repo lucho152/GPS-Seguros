@@ -139,6 +139,13 @@ public class Poliza {
 	public void setSiniestros(Set<Siniestro> siniestros) {
 		this.siniestros = siniestros;
 	}
+	
+	public boolean isPaid() {
+		if(pagos.isEmpty()) return false;
+		int diff = LocalDate.now().getMonth().getValue() - inicio.getMonth().getValue();
+		if(pagos.size() < diff) return false;
+		return true;
+	}
 
 	@Override
 	public int hashCode() {

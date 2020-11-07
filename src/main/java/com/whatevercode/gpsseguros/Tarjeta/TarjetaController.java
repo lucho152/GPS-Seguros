@@ -25,30 +25,28 @@ public class TarjetaController implements IController<Tarjeta>{
 	@PostMapping(path = "/save")
 	public @ResponseBody String save(@RequestParam Tarjeta tarjeta) {
 		Tarjeta saved = service.save(tarjeta);
-		if(saved != null) return "Tarjeta Guardado.";
-		return "No se a podido agregar el tarjeta.";
+		if(saved != null) return "Tarjeta guardado.";
+		return "No se a podido agregar la Tarjeta.";
 	}
 	
 	@Override
-	@GetMapping(path = "/find/{id}")
+	@GetMapping(path = "/{id}")
 	public @ResponseBody Tarjeta find(@RequestParam String id){
-		Optional<Tarjeta> tarjeta = service.find(id);
-		if(tarjeta.isPresent()) return tarjeta.get();
-		return null;
+		return service.find(id).get();
 	}
 	
 	@Override
-	@GetMapping(path = "/findAll")
+	@GetMapping
 	public @ResponseBody List<Tarjeta> find(){
 		return service.find();
 	}
 	
 	@Override
-	@DeleteMapping(path = "/delete/{id}")
+	@DeleteMapping(path = "/{id}")
 	public @ResponseBody String delete(@RequestParam String id){
 		Optional<Tarjeta> deleted = service.delete(id);
-		if(deleted.isEmpty()) return "Tarjeta Eliminado.";
-		return "No se a podido eliminar el tarjeta.";
+		if(deleted.isEmpty()) return "Tarjeta eliminado.";
+		return "No se a podido eliminar la Tarjeta.";
 	}
 
 }

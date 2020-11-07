@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PolizaRepo extends JpaRepository<Poliza, String>{
+public interface PolizaRepo<T extends Poliza> extends JpaRepository<T, String>{
 
 }

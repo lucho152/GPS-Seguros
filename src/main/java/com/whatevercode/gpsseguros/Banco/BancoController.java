@@ -25,30 +25,28 @@ public class BancoController implements IController<Banco>{
 	@PostMapping(path = "/save")
 	public @ResponseBody String save(@RequestParam Banco banco) {
 		Banco saved = service.save(banco);
-		if(saved != null) return "Banco Guardado.";
-		return "No se a podido agregar el banco.";
+		if(saved != null) return "Banco guardado.";
+		return "No se a podido agregar el Banco.";
 	}
 	
 	@Override
-	@GetMapping(path = "/find/{id}")
+	@GetMapping(path = "/{id}")
 	public @ResponseBody Banco find(@RequestParam String id){
-		Optional<Banco> banco = service.find(id);
-		if(banco.isPresent()) return banco.get();
-		return null;
+		return service.find(id).get();
 	}
 	
 	@Override
-	@GetMapping(path = "/findAll")
+	@GetMapping
 	public @ResponseBody List<Banco> find(){
 		return service.find();
 	}
 	
 	@Override
-	@DeleteMapping(path = "/delete/{id}")
+	@DeleteMapping(path = "/{id}")
 	public @ResponseBody String delete(@RequestParam String id){
 		Optional<Banco> deleted = service.delete(id);
-		if(deleted.isEmpty()) return "Banco Eliminado.";
-		return "No se a podido eliminar el banco.";
+		if(deleted.isEmpty()) return "Banco eliminado.";
+		return "No se a podido eliminar el Banco.";
 	}
 
 }

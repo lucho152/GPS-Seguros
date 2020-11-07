@@ -25,12 +25,12 @@ public class VehiculoController implements IController<Vehiculo>{
 	@PostMapping(path = "/save")
 	public @ResponseBody String save(@RequestParam Vehiculo vehiculo) {
 		Vehiculo saved = service.save(vehiculo);
-		if(saved != null) return "Vehiculo Guardado.";
-		return "No se a podido agregar el vehiculo.";
+		if(saved != null) return "Vehiculo guardado.";
+		return "No se a podido agregar el Vehiculo.";
 	}
 	
 	@Override
-	@GetMapping(path = "/find/{id}")
+	@GetMapping(path = "/{id}")
 	public @ResponseBody Vehiculo find(@RequestParam String id){
 		Optional<Vehiculo> vehiculo = service.find(id);
 		if(vehiculo.isPresent()) return vehiculo.get();
@@ -38,17 +38,17 @@ public class VehiculoController implements IController<Vehiculo>{
 	}
 	
 	@Override
-	@GetMapping(path = "/findAll")
+	@GetMapping
 	public @ResponseBody List<Vehiculo> find(){
 		return service.find();
 	}
 	
 	@Override
-	@DeleteMapping(path = "/delete/{id}")
+	@DeleteMapping(path = "/{id}")
 	public @ResponseBody String delete(@RequestParam String id){
 		Optional<Vehiculo> deleted = service.delete(id);
-		if(deleted.isEmpty()) return "Vehiculo Eliminado.";
-		return "No se a podido eliminar el vehiculo.";
+		if(deleted.isEmpty()) return "Vehiculo eliminado.";
+		return "No se a podido eliminar el Vehiculo.";
 	}
 	
 }

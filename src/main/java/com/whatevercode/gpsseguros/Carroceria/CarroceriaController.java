@@ -25,30 +25,28 @@ public class CarroceriaController implements IController<Carroceria>{
 	@PostMapping(path = "/save")
 	public @ResponseBody String save(@RequestParam Carroceria carroceria) {
 		Carroceria saved = service.save(carroceria);
-		if(saved != null) return "Carroceria Guardado.";
-		return "No se a podido agregar el carroceria.";
+		if(saved != null) return "Carroceria guardado.";
+		return "No se a podido agregar la Carroceria.";
 	}
 	
 	@Override
-	@GetMapping(path = "/find/{id}")
+	@GetMapping(path = "/{id}")
 	public @ResponseBody Carroceria find(@RequestParam String id){
-		Optional<Carroceria> carroceria = service.find(id);
-		if(carroceria.isPresent()) return carroceria.get();
-		return null;
+		return service.find(id).get();
 	}
 	
 	@Override
-	@GetMapping(path = "/findAll")
+	@GetMapping
 	public @ResponseBody List<Carroceria> find(){
 		return service.find();
 	}
 	
 	@Override
-	@DeleteMapping(path = "/delete/{id}")
+	@DeleteMapping(path = "/{id}")
 	public @ResponseBody String delete(@RequestParam String id){
 		Optional<Carroceria> deleted = service.delete(id);
-		if(deleted.isEmpty()) return "Carroceria Eliminado.";
-		return "No se a podido eliminar el carroceria.";
+		if(deleted.isEmpty()) return "Carroceria eliminado.";
+		return "No se a podido eliminar la Carroceria.";
 	}
 
 }
